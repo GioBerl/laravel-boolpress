@@ -24,4 +24,5 @@ Route::get('/', 'HomeController@index')->name('home');
 //!rotte relative alla dashboard
 Route::prefix('admin')->namespace('Admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/', 'HomeController@index')->name('home');
+        Route::resource('/posts', 'PostController');
     });
