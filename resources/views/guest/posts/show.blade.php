@@ -5,6 +5,11 @@
     <div class="row justify-content-center">
         <div class="col-12">
             <h1>{{ $post->title }}</h1>
+            <div>
+                @if($post->cover_image)
+                <img src="{{ asset('storage/' . $post->cover_image) }}" alt="post cover image">
+                @endif
+            </div>
             <p>{{ $post->content }}</p>
             <p>Categoria:
                 @if ($post->category)

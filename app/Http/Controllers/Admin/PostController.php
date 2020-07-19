@@ -8,6 +8,7 @@ use App\Post;
 use App\Category;
 use App\Tag;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -44,7 +45,8 @@ class PostController extends Controller
     {
         $request->validate([
             'title' => 'required|max:255|unique:posts,title',
-            'content' => 'required'
+            'content' => 'required',
+            'image' => 'image|max:1024'
         ]);
         $dati = $request->all();
         $slug = Str::of($dati['title'])->slug('-');
@@ -57,6 +59,13 @@ class PostController extends Controller
             $post_trovato = Post::where('slug', $slug)->first();
         }
         $dati['slug'] = $slug;
+
+        if($dati['image']) {
+            // carico l'immagine
+            $img_path = Storage::put('uploads', $dati['image']);
+            $dati['cover_image'] = $img_path;
+        }
+
         $nuovo_post = new Post();
         $nuovo_post->fill($dati);
         $nuovo_post->save();
@@ -111,7 +120,8 @@ class PostController extends Controller
     {
         $request->validate([
             'title' => 'required|max:255|unique:posts,title,'.$id,  //!per il discorso di unique
-            'content' => 'required'
+            'content' => 'required',
+            'image' => 'image|max:1024'
         ]);
 
         $dati = $request->all();
