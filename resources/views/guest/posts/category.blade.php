@@ -4,8 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12">
-            <h2 class="text-center">Benvenuto {{Auth::check() ? ucfirst(Auth::user()->name) : 'Guest'}}</h2>
-            <h1>Tutti i post</h1>
+            <h1>Post nella categoria: {{$category->name}}</h1>
             <ul>
                 @foreach ($posts as $post)
                 <li>
